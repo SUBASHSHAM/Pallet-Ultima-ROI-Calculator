@@ -3,6 +3,7 @@ import InputSection from './InputSection';
 import ResultsPanel from './ResultsPanel';
 import { calculateROI } from '../utils/calculations';
 import { exportToPDF, exportToCSV, emailResults } from '../utils/export';
+import { exportMergedResultsPDFSameFormat } from '../utils/exportMerged';
 
 const ROICalculator = () => {
   const [inputs, setInputs] = useState({
@@ -70,11 +71,27 @@ const ROICalculator = () => {
     return text.join(' ');
   };
 
-  const handleExportPDF = () => {
-    if (results) {
-      exportToPDF(inputs, results, narrative);
-    }
-  };
+  // const handleExportPDF = () => {
+  //   if (results) {
+  //     exportToPDF(inputs, results, narrative);
+  //   }
+  // };
+  const handleExportPDF = async () => {
+  if (!results) return;
+
+  try {
+    await exportMergedResultsPDFSameFormat({
+      inputs,
+      results,
+      narrative,
+      templateSrc: '/roi-template.pdf',     // put roi-template.pdf in /public
+      downloadName: 'vMeasure-Pallet-ROI-Report.pdf',
+    });
+  } catch (e) {
+    console.error('PDF export failed', e);
+    alert('Sorry, the PDF export failed. Check console for details.');
+  }
+};
 
   const handleExportCSV = () => {
     if (results) {
