@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, FileText, Table } from 'lucide-react';
-// import { exportMergedResultsPDFSameFormat } from '../utils/exportMerged';
+import { Download, Mail, FileText, Table } from 'lucide-react';
 
 const ResultsPanel = ({ results, narrative, onExportPDF, onExportCSV, onEmailResults }) => {
   const [showEmailForm, setShowEmailForm] = useState(false);
@@ -44,34 +43,17 @@ const ResultsPanel = ({ results, narrative, onExportPDF, onExportCSV, onEmailRes
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <h3 className="text-xl font-semibold mb-6">Results</h3>
-
-      {/* KPI tiles */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        {/* Hours Saved */}
-        <div className="rounded-lg p-4 bg-blue-50">
-          <p className="text-sm text-gray-600">Hours Saved</p>
-          <p className="text-2xl font-bold text-blue-800">
-            {results.annualHoursSaved.toFixed(2)}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">per year</p>
-        </div>
-
-        {/* Total Savings */}
-        <div className="rounded-lg p-4 bg-green-50">
-          <p className="text-sm text-gray-600">Total Savings</p>
-          <p className="text-2xl font-bold text-green-800">
-            {formatCurrency(results.totalAnnualSavings)}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">annually</p>
-        </div>
-
-        {/* FTE Saved */}
-        <div className="rounded-lg p-4 bg-purple-50">
-          <p className="text-sm text-gray-600">FTE Saved</p>
-          <p className="text-2xl font-bold text-purple-800">
-            {results.fteSaved.toFixed(2)}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">equivalent</p>
+      
+      <div className="space-y-4 mb-6">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <p className="text-sm text-gray-600">Annual hours saved</p>
+            <p className="text-2xl font-bold text-gray-900">{results.annualHoursSaved.toFixed(2)}</p>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <p className="text-sm text-gray-600">FTE equivalent saved</p>
+            <p className="text-2xl font-bold text-gray-900">{results.fteSaved.toFixed(2)}</p>
+          </div>
         </div>
 
         {/* Payback */}

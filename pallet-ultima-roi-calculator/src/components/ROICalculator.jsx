@@ -3,7 +3,6 @@ import InputSection from './InputSection';
 import ResultsPanel from './ResultsPanel';
 import { calculateROI } from '../utils/calculations';
 import { exportToPDF, exportToCSV, emailResults } from '../utils/export';
-import { exportMergedResultsPDFSameFormat } from '../utils/exportMerged';
 
 const ROICalculator = () => {
   const [inputs, setInputs] = useState({
@@ -30,79 +29,49 @@ const ROICalculator = () => {
 
   useEffect(() => {
     if (inputs.palletsPerDay && inputs.workdaysPerYear) {
-      const calculatedResults = calculateROI(inputs);
-      setResults(calculatedResults);
-      setNarrative(generateNarrative(calculatedResults));
+      const r = calculateROI(inputs);
+      setResults(r);
+      setNarrative(generateNarrative(r));
     } else {
       setResults(null);
       setNarrative('');
     }
   }, [inputs]);
 
-  const generateNarrative = (results) => {
+  const generateNarrative = (r) => {
     let text = [];
-    
-    if (results.paybackMonths <= 3) {
-      text.push('Payback ≤ 3 months—clears in Q1.');
-    } else if (results.paybackMonths <= 6) {
-      text.push('Mid-year payback.');
-    } else if (results.paybackMonths > 6) {
-      text.push('H2 payback—raise chargeback reduction or revisit Year-1 cost.');
-    }
+    if (r.paybackMonths <= 3) text.push('Payback ≤ 3 months—clears in Q1.');
+    else if (r.paybackMonths <= 6) text.push('Mid-year payback.');
+    else text.push('H2 payback—raise chargeback reduction or revisit Year-1 cost.');
 
-    if (results.year1Net > 0) {
-      text.push(`Year-1 net positive by $${results.year1Net.toLocaleString()}.`);
-    } else {
-      text.push('Year-1 not net positive—tune average $ per chargeback and reduction.');
-    }
+    if (r.year1Net > 0) text.push(`Year-1 net positive by $${r.year1Net.toLocaleString()}.`);
+    else text.push('Year-1 not net positive—tune average $ per chargeback and reduction.');
 
-    if (results.ongoingNet > 0) {
-      text.push(`From Year-2, net savings ~$${results.ongoingNet.toLocaleString()}/yr.`);
-    } else {
-      text.push('Near break-even—tighten dispute time or increase reduction.');
-    }
+    if (r.ongoingNet > 0) text.push(`From Year-2, net savings ~$${r.ongoingNet.toLocaleString()}/yr.`);
+    else text.push('Near break-even—tighten dispute time or increase reduction.');
 
-    if (results.fteSaved >= 1) {
-      text.push(`Saves about ${results.fteSaved.toFixed(2)} FTE—reassign to value work.`);
-    } else {
-      text.push('Partial FTE freed—pool across shifts.');
-    }
+    if (r.fteSaved >= 1) text.push(`Saves about ${r.fteSaved.toFixed(2)} FTE—reassign to value work.`);
+    else text.push('Partial FTE freed—pool across shifts.');
 
     return text.join(' ');
   };
 
-  // const handleExportPDF = () => {
-  //   if (results) {
-  //     exportToPDF(inputs, results, narrative);
-  //   }
-  // };
-  const handleExportPDF = async () => {
-  if (!results) return;
-
-  try {
-    await exportMergedResultsPDFSameFormat({
-      inputs,
-      results,
-      narrative,
-      templateSrc: '/roi-template.pdf',     // put roi-template.pdf in /public
-      downloadName: 'vMeasure-Pallet-ROI-Report.pdf',
-    });
-  } catch (e) {
-    console.error('PDF export failed', e);
-    alert('Sorry, the PDF export failed. Check console for details.');
-  }
-};
-
-  const handleExportCSV = () => {
+  const handleExportPDF = () => {
     if (results) {
-      exportToCSV(inputs, results, narrative);
+      exportToPDF(inputs, results, narrative);
     }
   };
 
+  const handleExportCSV = () => {
+    if (!results) return;
+    try { exportToCSV(inputs, results, narrative); }
+    catch (e) { console.error(e); alert('CSV export failed'); }
+  };
+
   const handleEmailResults = (email, name) => {
-    if (results) {
-      emailResults(inputs, results, narrative, email, name);
-    }
+    if (!results) return;
+    try { emailResults(inputs, results, narrative, email, name); }
+    catch (e) { console.error(e); alert('Email failed'); }
   };
 
   return (
@@ -112,18 +81,18 @@ const ROICalculator = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-4">ROI Calculator</h2>
           <p className="text-lg text-gray-600">Enter your shipping data to see potential savings</p>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <InputSection inputs={inputs} setInputs={setInputs} />
-          <ResultsPanel 
-            results={results} 
+          <ResultsPanel
+            results={results}
             narrative={narrative}
             onExportPDF={handleExportPDF}
             onExportCSV={handleExportCSV}
             onEmailResults={handleEmailResults}
           />
         </div>
-        
+
         <div className="mt-8 text-center text-sm text-gray-500">
           <p>Benchmarks are editable. Replace with your numbers any time.</p>
         </div>
