@@ -21,11 +21,11 @@ const InputSection = ({ inputs, setInputs }) => {
       
       {/* Section A: Shipment Volume */}
       <div className="mb-8">
-        <h4 className="font-medium text-gray-900 mb-4">A) Shipment Volume</h4>
+        <h4 className="font-medium text-gray-900 mb-4">Shipment Volume</h4>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              A1 Pallets per day
+              Pallets per day
             </label>
             <input
               type="number"
@@ -38,7 +38,7 @@ const InputSection = ({ inputs, setInputs }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              A2 Workdays per year
+               Workdays per year
             </label>
             <input
               type="number"
@@ -54,11 +54,11 @@ const InputSection = ({ inputs, setInputs }) => {
 
       {/* Section B: Labor & Capture Time */}
       <div className="mb-8">
-        <h4 className="font-medium text-gray-900 mb-4">B) Labor & capture time per pallet</h4>
+        <h4 className="font-medium text-gray-900 mb-4"> Labor & capture time per pallet</h4>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              B1 Manual data capture time (seconds)
+               Manual data capture time (seconds)
             </label>
             <input
               type="number"
@@ -72,7 +72,7 @@ const InputSection = ({ inputs, setInputs }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              B2 Automated data capture time by vMeasure (seconds)
+               Automated data capture time by vMeasure (seconds)
             </label>
             <input
               type="number"
@@ -86,7 +86,7 @@ const InputSection = ({ inputs, setInputs }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              B3 Fully loaded labor rate (USD/hour)
+               Fully loaded labor rate (USD/hour)
             </label>
             <input
               type="number"
@@ -101,11 +101,11 @@ const InputSection = ({ inputs, setInputs }) => {
 
       {/* Section C: Carrier Adjustments */}
       <div className="mb-8">
-        <h4 className="font-medium text-gray-900 mb-4">C) Carrier adjustments / chargebacks</h4>
+        <h4 className="font-medium text-gray-900 mb-4"> Carrier adjustments / chargebacks</h4>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              C1a Annual chargebacks (value) (USD/year)
+               Annual chargebacks (value) (USD/year)
             </label>
             <input
               type="number"
@@ -120,7 +120,7 @@ const InputSection = ({ inputs, setInputs }) => {
             <>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  C2 Avg $ per chargeback (USD/pallet)
+                   Avg $ per chargeback (USD/pallet)
                 </label>
                 <input
                   type="number"
@@ -132,7 +132,7 @@ const InputSection = ({ inputs, setInputs }) => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  C5 Chargeback incidence rate: {inputs.chargebackIncidence}%
+                   Chargeback incidence rate: {inputs.chargebackIncidence}%
                 </label>
                 <input
                   type="range"
@@ -152,11 +152,11 @@ const InputSection = ({ inputs, setInputs }) => {
 
       {/* Section D: Disputes */}
       <div className="mb-8">
-        <h4 className="font-medium text-gray-900 mb-4">D) Disputes & admin workload</h4>
+        <h4 className="font-medium text-gray-900 mb-4"> Disputes & admin workload</h4>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              D1 Disputes per month
+               Disputes per month
             </label>
             <input
               type="number"
@@ -187,7 +187,7 @@ const InputSection = ({ inputs, setInputs }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              D2 Avg hours per dispute
+               Avg hours per dispute
             </label>
             <input
               type="number"
@@ -200,7 +200,7 @@ const InputSection = ({ inputs, setInputs }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              P Share of chargebacks you contest: {inputs.shareContested}%
+               Share of chargebacks you contest: {inputs.shareContested}%
             </label>
             <input
               type="range"
@@ -214,7 +214,7 @@ const InputSection = ({ inputs, setInputs }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              D3 Dispute-hours reduction with vMeasure proof: {inputs.disputeReduction}%
+               Dispute-hours reduction with vMeasure proof: {inputs.disputeReduction}%
             </label>
             <input
               type="range"
@@ -231,10 +231,10 @@ const InputSection = ({ inputs, setInputs }) => {
 
       {/* Section E: Impact */}
       <div className="mb-8">
-        <h4 className="font-medium text-gray-900 mb-4">E) Impact from vMeasure</h4>
+        <h4 className="font-medium text-gray-900 mb-4"> Impact from vMeasure</h4>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            E1 Chargeback / reclassification reduction: {inputs.chargebackReduction}%
+             Chargeback / reclassification reduction: {inputs.chargebackReduction}%
           </label>
           <input
             type="range"
@@ -250,11 +250,11 @@ const InputSection = ({ inputs, setInputs }) => {
 
       {/* Section F: Costs */}
       <div className="mb-8">
-        <h4 className="font-medium text-gray-900 mb-4">F) Costs</h4>
+        <h4 className="font-medium text-gray-900 mb-4"> Costs</h4>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              F1 Year-1 total cost (USD)
+               Year-1 total cost (USD)
             </label>
             <input
               type="number"
@@ -267,7 +267,7 @@ const InputSection = ({ inputs, setInputs }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              F2 Ongoing annual cost (Year-2+) (USD/year)
+               Ongoing annual cost (Year-2+) (USD/year)
             </label>
             <input
               type="number"
